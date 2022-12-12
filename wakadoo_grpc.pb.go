@@ -18,122 +18,122 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// FileServiceClient is the client API for FileService service.
+// FileClient is the client API for File service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type FileServiceClient interface {
+type FileClient interface {
 	Save(ctx context.Context, in *FileSaveRequest, opts ...grpc.CallOption) (*FileSaveResponse, error)
 	Get(ctx context.Context, in *FileGetRequest, opts ...grpc.CallOption) (*FileGetResponse, error)
 }
 
-type fileServiceClient struct {
+type fileClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewFileServiceClient(cc grpc.ClientConnInterface) FileServiceClient {
-	return &fileServiceClient{cc}
+func NewFileClient(cc grpc.ClientConnInterface) FileClient {
+	return &fileClient{cc}
 }
 
-func (c *fileServiceClient) Save(ctx context.Context, in *FileSaveRequest, opts ...grpc.CallOption) (*FileSaveResponse, error) {
+func (c *fileClient) Save(ctx context.Context, in *FileSaveRequest, opts ...grpc.CallOption) (*FileSaveResponse, error) {
 	out := new(FileSaveResponse)
-	err := c.cc.Invoke(ctx, "/services.FileService/Save", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/services.File/Save", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *fileServiceClient) Get(ctx context.Context, in *FileGetRequest, opts ...grpc.CallOption) (*FileGetResponse, error) {
+func (c *fileClient) Get(ctx context.Context, in *FileGetRequest, opts ...grpc.CallOption) (*FileGetResponse, error) {
 	out := new(FileGetResponse)
-	err := c.cc.Invoke(ctx, "/services.FileService/Get", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/services.File/Get", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// FileServiceServer is the server API for FileService service.
-// All implementations must embed UnimplementedFileServiceServer
+// FileServer is the server API for File service.
+// All implementations must embed UnimplementedFileServer
 // for forward compatibility
-type FileServiceServer interface {
+type FileServer interface {
 	Save(context.Context, *FileSaveRequest) (*FileSaveResponse, error)
 	Get(context.Context, *FileGetRequest) (*FileGetResponse, error)
-	mustEmbedUnimplementedFileServiceServer()
+	mustEmbedUnimplementedFileServer()
 }
 
-// UnimplementedFileServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedFileServiceServer struct {
+// UnimplementedFileServer must be embedded to have forward compatible implementations.
+type UnimplementedFileServer struct {
 }
 
-func (UnimplementedFileServiceServer) Save(context.Context, *FileSaveRequest) (*FileSaveResponse, error) {
+func (UnimplementedFileServer) Save(context.Context, *FileSaveRequest) (*FileSaveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Save not implemented")
 }
-func (UnimplementedFileServiceServer) Get(context.Context, *FileGetRequest) (*FileGetResponse, error) {
+func (UnimplementedFileServer) Get(context.Context, *FileGetRequest) (*FileGetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
-func (UnimplementedFileServiceServer) mustEmbedUnimplementedFileServiceServer() {}
+func (UnimplementedFileServer) mustEmbedUnimplementedFileServer() {}
 
-// UnsafeFileServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to FileServiceServer will
+// UnsafeFileServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to FileServer will
 // result in compilation errors.
-type UnsafeFileServiceServer interface {
-	mustEmbedUnimplementedFileServiceServer()
+type UnsafeFileServer interface {
+	mustEmbedUnimplementedFileServer()
 }
 
-func RegisterFileServiceServer(s grpc.ServiceRegistrar, srv FileServiceServer) {
-	s.RegisterService(&FileService_ServiceDesc, srv)
+func RegisterFileServer(s grpc.ServiceRegistrar, srv FileServer) {
+	s.RegisterService(&File_ServiceDesc, srv)
 }
 
-func _FileService_Save_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _File_Save_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FileSaveRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FileServiceServer).Save(ctx, in)
+		return srv.(FileServer).Save(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/services.FileService/Save",
+		FullMethod: "/services.File/Save",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FileServiceServer).Save(ctx, req.(*FileSaveRequest))
+		return srv.(FileServer).Save(ctx, req.(*FileSaveRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FileService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _File_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FileGetRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FileServiceServer).Get(ctx, in)
+		return srv.(FileServer).Get(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/services.FileService/Get",
+		FullMethod: "/services.File/Get",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FileServiceServer).Get(ctx, req.(*FileGetRequest))
+		return srv.(FileServer).Get(ctx, req.(*FileGetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// FileService_ServiceDesc is the grpc.ServiceDesc for FileService service.
+// File_ServiceDesc is the grpc.ServiceDesc for File service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var FileService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "services.FileService",
-	HandlerType: (*FileServiceServer)(nil),
+var File_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "services.File",
+	HandlerType: (*FileServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Save",
-			Handler:    _FileService_Save_Handler,
+			Handler:    _File_Save_Handler,
 		},
 		{
 			MethodName: "Get",
-			Handler:    _FileService_Get_Handler,
+			Handler:    _File_Get_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
