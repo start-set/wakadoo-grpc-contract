@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package account;
+
+option go_package="github.com/start-set/wakadoo-grpc-contract";
+
+message Account {
+  string email = 1;
+  string name = 2;
+}

@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+package session;
+
+option go_package="github.com/start-set/wakadoo-grpc-contract";

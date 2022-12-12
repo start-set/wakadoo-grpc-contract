@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package="github.com/start-set/wakadoo-grpc-contract";
+
+import "proto/account.proto";
+
+message SignInRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message SignInResponse {
+  account.Account account = 1;
+  string session = 2;
+}
