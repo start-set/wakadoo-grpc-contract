@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.11
-// source: .proto
+// source: wakadoo.proto
 
 package wakadoo_grpc_contract
 
@@ -101,5 +101,5 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: ".proto",
+	Metadata: "wakadoo.proto",
 }
