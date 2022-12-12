@@ -18,6 +18,128 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
+// FileServiceClient is the client API for FileService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type FileServiceClient interface {
+	Save(ctx context.Context, in *FileSaveRequest, opts ...grpc.CallOption) (*FileSaveResponse, error)
+	Get(ctx context.Context, in *FileGetRequest, opts ...grpc.CallOption) (*FileGetResponse, error)
+}
+
+type fileServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewFileServiceClient(cc grpc.ClientConnInterface) FileServiceClient {
+	return &fileServiceClient{cc}
+}
+
+func (c *fileServiceClient) Save(ctx context.Context, in *FileSaveRequest, opts ...grpc.CallOption) (*FileSaveResponse, error) {
+	out := new(FileSaveResponse)
+	err := c.cc.Invoke(ctx, "/services.FileService/Save", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileServiceClient) Get(ctx context.Context, in *FileGetRequest, opts ...grpc.CallOption) (*FileGetResponse, error) {
+	out := new(FileGetResponse)
+	err := c.cc.Invoke(ctx, "/services.FileService/Get", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// FileServiceServer is the server API for FileService service.
+// All implementations must embed UnimplementedFileServiceServer
+// for forward compatibility
+type FileServiceServer interface {
+	Save(context.Context, *FileSaveRequest) (*FileSaveResponse, error)
+	Get(context.Context, *FileGetRequest) (*FileGetResponse, error)
+	mustEmbedUnimplementedFileServiceServer()
+}
+
+// UnimplementedFileServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedFileServiceServer struct {
+}
+
+func (UnimplementedFileServiceServer) Save(context.Context, *FileSaveRequest) (*FileSaveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Save not implemented")
+}
+func (UnimplementedFileServiceServer) Get(context.Context, *FileGetRequest) (*FileGetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedFileServiceServer) mustEmbedUnimplementedFileServiceServer() {}
+
+// UnsafeFileServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to FileServiceServer will
+// result in compilation errors.
+type UnsafeFileServiceServer interface {
+	mustEmbedUnimplementedFileServiceServer()
+}
+
+func RegisterFileServiceServer(s grpc.ServiceRegistrar, srv FileServiceServer) {
+	s.RegisterService(&FileService_ServiceDesc, srv)
+}
+
+func _FileService_Save_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FileSaveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServiceServer).Save(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.FileService/Save",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServiceServer).Save(ctx, req.(*FileSaveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FileService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FileGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.FileService/Get",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServiceServer).Get(ctx, req.(*FileGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// FileService_ServiceDesc is the grpc.ServiceDesc for FileService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var FileService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "services.FileService",
+	HandlerType: (*FileServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Save",
+			Handler:    _FileService_Save_Handler,
+		},
+		{
+			MethodName: "Get",
+			Handler:    _FileService_Get_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "wakadoo.proto",
+}
+
 // AuthClient is the client API for Auth service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.

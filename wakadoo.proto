@@ -3,6 +3,11 @@ package services;
 
 option go_package=".;wakadoo_grpc_contract";
 
+service FileService {
+  rpc Save(FileSaveRequest) returns (FileSaveResponse) {}
+  rpc Get(FileGetRequest) returns (FileGetResponse) {}
+}
+
 service Auth {
   rpc SignIn(SignInRequest) returns (SignInResponse) {}
 }
@@ -20,4 +25,21 @@ message SignInResponse {
 message Account {
   string email = 1;
   string name = 2;
+}
+
+message FileSaveRequest {
+  string name = 1;
+  bytes bytes = 2;
+}
+
+message FileSaveResponse {
+  uint64 byteCount = 1;
+}
+
+message FileGetRequest {
+  string name = 1;
+}
+
+message FileGetResponse {
+  bytes bytes = 1;
 }
