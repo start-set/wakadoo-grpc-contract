@@ -1,7 +1,9 @@
 generate:
 	protoc \
-		--proto_path=. \
-		--go_opt=paths=source_relative \
-		--go_out=. \
-		--go-grpc_out=. \
-		wakadoo.proto
+		-I. \
+		--go_out=gen \
+		--go-grpc_out=gen \
+		wakadoo.proto proto/*.proto
+
+last-tag:
+	git tag | sort -V | tail -1

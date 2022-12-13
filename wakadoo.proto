@@ -3,7 +3,6 @@ package services;
 
 option go_package=".;wakadoo_grpc_contract";
 
-import "proto/account.proto";
 import "proto/auth.proto";
 import "proto/file.proto";
 import "proto/session.proto";
