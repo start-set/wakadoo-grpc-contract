@@ -1,8 +1,8 @@
 generate:
 	protoc \
 		-I. \
-		--go_out=gen \
-		--go-grpc_out=gen \
+		--go_out=. \
+		--go-grpc_out=. \
 		wakadoo.proto proto/*.proto
 
 last-tag:
