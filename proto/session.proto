@@ -1,0 +1,47 @@
+syntax = "proto3";
+package session;
+
+option go_package = ".;wakadoo_grpc_contract";
+
+import "google/protobuf/timestamp.proto";
+
+message SessionCreateRequest {
+  string ip = 1;
+  google.protobuf.Timestamp lastActivity = 2;
+  google.protobuf.Timestamp createDate = 3;
+}
+
+message SessionCreateResponse {
+  string hash = 1;
+}
+
+message SessionGetEmailRequest {
+  string email = 1;
+}
+
+message SessionGetEmailResponse {
+  Session session = 1;
+}
+
+message SessionUpdateActivityRequest {
+  google.protobuf.Timestamp timestamp = 1;
+}
+
+message SessionUpdateActivityResponse {
+  bool ok = 1;
+}
+
+message SessionGetActiveRequest {
+  string email = 1;
+}
+
+message SessionGetActiveResponse {
+  repeated Session sessions = 1;
+}
+
+message Session {
+  string ip = 1;
+  google.protobuf.Timestamp lastActivity = 2;
+  google.protobuf.Timestamp createDate = 3;
+  string device = 4;
+}

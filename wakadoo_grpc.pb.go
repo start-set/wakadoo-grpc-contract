@@ -225,3 +225,197 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "wakadoo.proto",
 }
+
+// SessionClient is the client API for Session service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type SessionClient interface {
+	Create(ctx context.Context, in *SessionCreateRequest, opts ...grpc.CallOption) (*SessionCreateResponse, error)
+	GetEmail(ctx context.Context, in *SessionGetEmailRequest, opts ...grpc.CallOption) (*SessionGetEmailResponse, error)
+	UpdateLastActivityTime(ctx context.Context, in *SessionUpdateActivityRequest, opts ...grpc.CallOption) (*SessionUpdateActivityResponse, error)
+	GetActive(ctx context.Context, in *SessionGetActiveRequest, opts ...grpc.CallOption) (*SessionGetActiveResponse, error)
+}
+
+type sessionClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewSessionClient(cc grpc.ClientConnInterface) SessionClient {
+	return &sessionClient{cc}
+}
+
+func (c *sessionClient) Create(ctx context.Context, in *SessionCreateRequest, opts ...grpc.CallOption) (*SessionCreateResponse, error) {
+	out := new(SessionCreateResponse)
+	err := c.cc.Invoke(ctx, "/services.Session/Create", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sessionClient) GetEmail(ctx context.Context, in *SessionGetEmailRequest, opts ...grpc.CallOption) (*SessionGetEmailResponse, error) {
+	out := new(SessionGetEmailResponse)
+	err := c.cc.Invoke(ctx, "/services.Session/GetEmail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sessionClient) UpdateLastActivityTime(ctx context.Context, in *SessionUpdateActivityRequest, opts ...grpc.CallOption) (*SessionUpdateActivityResponse, error) {
+	out := new(SessionUpdateActivityResponse)
+	err := c.cc.Invoke(ctx, "/services.Session/UpdateLastActivityTime", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sessionClient) GetActive(ctx context.Context, in *SessionGetActiveRequest, opts ...grpc.CallOption) (*SessionGetActiveResponse, error) {
+	out := new(SessionGetActiveResponse)
+	err := c.cc.Invoke(ctx, "/services.Session/GetActive", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// SessionServer is the server API for Session service.
+// All implementations must embed UnimplementedSessionServer
+// for forward compatibility
+type SessionServer interface {
+	Create(context.Context, *SessionCreateRequest) (*SessionCreateResponse, error)
+	GetEmail(context.Context, *SessionGetEmailRequest) (*SessionGetEmailResponse, error)
+	UpdateLastActivityTime(context.Context, *SessionUpdateActivityRequest) (*SessionUpdateActivityResponse, error)
+	GetActive(context.Context, *SessionGetActiveRequest) (*SessionGetActiveResponse, error)
+	mustEmbedUnimplementedSessionServer()
+}
+
+// UnimplementedSessionServer must be embedded to have forward compatible implementations.
+type UnimplementedSessionServer struct {
+}
+
+func (UnimplementedSessionServer) Create(context.Context, *SessionCreateRequest) (*SessionCreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedSessionServer) GetEmail(context.Context, *SessionGetEmailRequest) (*SessionGetEmailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEmail not implemented")
+}
+func (UnimplementedSessionServer) UpdateLastActivityTime(context.Context, *SessionUpdateActivityRequest) (*SessionUpdateActivityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateLastActivityTime not implemented")
+}
+func (UnimplementedSessionServer) GetActive(context.Context, *SessionGetActiveRequest) (*SessionGetActiveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetActive not implemented")
+}
+func (UnimplementedSessionServer) mustEmbedUnimplementedSessionServer() {}
+
+// UnsafeSessionServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SessionServer will
+// result in compilation errors.
+type UnsafeSessionServer interface {
+	mustEmbedUnimplementedSessionServer()
+}
+
+func RegisterSessionServer(s grpc.ServiceRegistrar, srv SessionServer) {
+	s.RegisterService(&Session_ServiceDesc, srv)
+}
+
+func _Session_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SessionCreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SessionServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Session/Create",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SessionServer).Create(ctx, req.(*SessionCreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Session_GetEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SessionGetEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SessionServer).GetEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Session/GetEmail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SessionServer).GetEmail(ctx, req.(*SessionGetEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Session_UpdateLastActivityTime_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SessionUpdateActivityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SessionServer).UpdateLastActivityTime(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Session/UpdateLastActivityTime",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SessionServer).UpdateLastActivityTime(ctx, req.(*SessionUpdateActivityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Session_GetActive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SessionGetActiveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SessionServer).GetActive(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Session/GetActive",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SessionServer).GetActive(ctx, req.(*SessionGetActiveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Session_ServiceDesc is the grpc.ServiceDesc for Session service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Session_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "services.Session",
+	HandlerType: (*SessionServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Create",
+			Handler:    _Session_Create_Handler,
+		},
+		{
+			MethodName: "GetEmail",
+			Handler:    _Session_GetEmail_Handler,
+		},
+		{
+			MethodName: "UpdateLastActivityTime",
+			Handler:    _Session_UpdateLastActivityTime_Handler,
+		},
+		{
+			MethodName: "GetActive",
+			Handler:    _Session_GetActive_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "wakadoo.proto",
+}

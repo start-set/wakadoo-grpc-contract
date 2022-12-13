@@ -3,43 +3,23 @@ package services;
 
 option go_package=".;wakadoo_grpc_contract";
 
+import "proto/account.proto";
+import "proto/auth.proto";
+import "proto/file.proto";
+import "proto/session.proto";
+
 service File {
-  rpc Save(FileSaveRequest) returns (FileSaveResponse) {}
-  rpc Get(FileGetRequest) returns (FileGetResponse) {}
+  rpc Save(file.FileSaveRequest) returns (file.FileSaveResponse) {}
+  rpc Get(file.FileGetRequest) returns (file.FileGetResponse) {}
 }
 
 service Auth {
-  rpc SignIn(SignInRequest) returns (SignInResponse) {}
+  rpc SignIn(auth.SignInRequest) returns (auth.SignInResponse) {}
 }
 
-message SignInRequest {
-  string email = 1;
-  string password = 2;
-}
-
-message SignInResponse {
-  Account account = 1;
-  string session = 2;
-}
-
-message Account {
-  string email = 1;
-  string name = 2;
-}
-
-message FileSaveRequest {
-  string name = 1;
-  bytes bytes = 2;
-}
-
-message FileSaveResponse {
-  uint64 byteCount = 1;
-}
-
-message FileGetRequest {
-  string name = 1;
-}
-
-message FileGetResponse {
-  bytes bytes = 1;
+service Session {
+  rpc Create(session.SessionCreateRequest) returns (session.SessionCreateResponse) {}
+  rpc GetEmail(session.SessionGetEmailRequest) returns (session.SessionGetEmailResponse) {}
+  rpc UpdateLastActivityTime(session.SessionUpdateActivityRequest) returns (session.SessionUpdateActivityResponse) {}
+  rpc GetActive(session.SessionGetActiveRequest) returns (session.SessionGetActiveResponse) {}
 }
