@@ -9,6 +9,8 @@ message SessionCreateRequest {
   string ip = 1;
   google.protobuf.Timestamp lastActivity = 2;
   google.protobuf.Timestamp createDate = 3;
+  string device = 4;
+  string email = 5;
 }
 
 message SessionCreateResponse {
