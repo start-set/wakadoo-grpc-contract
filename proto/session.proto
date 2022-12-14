@@ -5,6 +5,14 @@ option go_package = ".;wakadoo_grpc_contract";
 
 import "google/protobuf/timestamp.proto";
 
+message Session {
+  string ip = 1;
+  google.protobuf.Timestamp lastActivity = 2;
+  google.protobuf.Timestamp createDate = 3;
+  string device = 4;
+  string email = 5;
+}
+
 message SessionCreateRequest {
   string ip = 1;
   google.protobuf.Timestamp lastActivity = 2;
@@ -39,11 +47,4 @@ message SessionGetActiveRequest {
 
 message SessionGetActiveResponse {
   repeated Session sessions = 1;
-}
-
-message Session {
-  string ip = 1;
-  google.protobuf.Timestamp lastActivity = 2;
-  google.protobuf.Timestamp createDate = 3;
-  string device = 4;
 }
