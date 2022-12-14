@@ -31,10 +31,12 @@ message SessionGetEmailRequest {
 
 message SessionGetEmailResponse {
   string email = 1;
+  bool ok = 2;
 }
 
 message SessionUpdateActivityRequest {
-  google.protobuf.Timestamp timestamp = 1;
+  string hash = 1;
+  google.protobuf.Timestamp timestamp = 2;
 }
 
 message SessionUpdateActivityResponse {
