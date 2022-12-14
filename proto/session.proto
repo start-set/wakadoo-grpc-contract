@@ -18,11 +18,11 @@ message SessionCreateResponse {
 }
 
 message SessionGetEmailRequest {
-  string email = 1;
+  string hash = 1;
 }
 
 message SessionGetEmailResponse {
-  Session session = 1;
+  string email = 1;
 }
 
 message SessionUpdateActivityRequest {
