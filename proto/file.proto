@@ -9,7 +9,7 @@ message FileSaveRequest {
 }
 
 message FileSaveResponse {
-  uint64 byteCount = 1;
+  string id = 1;
 }
 
 message FileGetRequest {
