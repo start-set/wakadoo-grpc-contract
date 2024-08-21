@@ -19,3 +19,11 @@ message FileGetRequest {
 message FileGetResponse {
   bytes bytes = 1;
 }
+
+message FileDeleteRequest {
+  string id = 1;
+}
+
+message FileDeleteResponse {
+  bool isDeleted = 1;
+}
