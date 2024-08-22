@@ -9,6 +9,7 @@ import "proto/session.proto";
 service File {
   rpc Save(file.FileSaveRequest) returns (file.FileSaveResponse) {}
   rpc Get(file.FileGetRequest) returns (file.FileGetResponse) {}
+  rpc Delete(file.FileDeleteRequest) returns (file.FileDeleteResponse) {}
 }
 
 service Session {
