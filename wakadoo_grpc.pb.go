@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type FileClient interface {
 	Save(ctx context.Context, in *FileSaveRequest, opts ...grpc.CallOption) (*FileSaveResponse, error)
 	Get(ctx context.Context, in *FileGetRequest, opts ...grpc.CallOption) (*FileGetResponse, error)
+	Delete(ctx context.Context, in *FileDeleteRequest, opts ...grpc.CallOption) (*FileDeleteResponse, error)
 }
 
 type fileClient struct {
@@ -52,12 +53,22 @@ func (c *fileClient) Get(ctx context.Context, in *FileGetRequest, opts ...grpc.C
 	return out, nil
 }
 
+func (c *fileClient) Delete(ctx context.Context, in *FileDeleteRequest, opts ...grpc.CallOption) (*FileDeleteResponse, error) {
+	out := new(FileDeleteResponse)
+	err := c.cc.Invoke(ctx, "/services.File/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FileServer is the server API for File service.
 // All implementations must embed UnimplementedFileServer
 // for forward compatibility
 type FileServer interface {
 	Save(context.Context, *FileSaveRequest) (*FileSaveResponse, error)
 	Get(context.Context, *FileGetRequest) (*FileGetResponse, error)
+	Delete(context.Context, *FileDeleteRequest) (*FileDeleteResponse, error)
 	mustEmbedUnimplementedFileServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedFileServer) Save(context.Context, *FileSaveRequest) (*FileSav
 }
 func (UnimplementedFileServer) Get(context.Context, *FileGetRequest) (*FileGetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedFileServer) Delete(context.Context, *FileDeleteRequest) (*FileDeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (UnimplementedFileServer) mustEmbedUnimplementedFileServer() {}
 
@@ -120,6 +134,24 @@ func _File_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{
 	return interceptor(ctx, in, info, handler)
 }
 
+func _File_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FileDeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.File/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServer).Delete(ctx, req.(*FileDeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // File_ServiceDesc is the grpc.ServiceDesc for File service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var File_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Get",
 			Handler:    _File_Get_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _File_Delete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

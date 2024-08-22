@@ -216,6 +216,100 @@ func (x *FileGetResponse) GetBytes() []byte {
 	return nil
 }
 
+type FileDeleteRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *FileDeleteRequest) Reset() {
+	*x = FileDeleteRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_file_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FileDeleteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FileDeleteRequest) ProtoMessage() {}
+
+func (x *FileDeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_file_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FileDeleteRequest.ProtoReflect.Descriptor instead.
+func (*FileDeleteRequest) Descriptor() ([]byte, []int) {
+	return file_proto_file_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *FileDeleteRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type FileDeleteResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	IsDeleted bool `protobuf:"varint,1,opt,name=isDeleted,proto3" json:"isDeleted,omitempty"`
+}
+
+func (x *FileDeleteResponse) Reset() {
+	*x = FileDeleteResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_file_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FileDeleteResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FileDeleteResponse) ProtoMessage() {}
+
+func (x *FileDeleteResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_file_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FileDeleteResponse.ProtoReflect.Descriptor instead.
+func (*FileDeleteResponse) Descriptor() ([]byte, []int) {
+	return file_proto_file_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *FileDeleteResponse) GetIsDeleted() bool {
+	if x != nil {
+		return x.IsDeleted
+	}
+	return false
+}
+
 var File_proto_file_proto protoreflect.FileDescriptor
 
 var file_proto_file_proto_rawDesc = []byte{
@@ -231,9 +325,14 @@ var file_proto_file_proto_rawDesc = []byte{
 	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x27, 0x0a, 0x0f, 0x46,
 	0x69, 0x6c, 0x65, 0x47, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14,
 	0x0a, 0x05, 0x62, 0x79, 0x74, 0x65, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x62,
-	0x79, 0x74, 0x65, 0x73, 0x42, 0x19, 0x5a, 0x17, 0x2e, 0x3b, 0x77, 0x61, 0x6b, 0x61, 0x64, 0x6f,
-	0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x79, 0x74, 0x65, 0x73, 0x22, 0x23, 0x0a, 0x11, 0x46, 0x69, 0x6c, 0x65, 0x44, 0x65, 0x6c, 0x65,
+	0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x32, 0x0a, 0x12, 0x46, 0x69, 0x6c,
+	0x65, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x1c, 0x0a, 0x09, 0x69, 0x73, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x08, 0x52, 0x09, 0x69, 0x73, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x42, 0x19, 0x5a,
+	0x17, 0x2e, 0x3b, 0x77, 0x61, 0x6b, 0x61, 0x64, 0x6f, 0x6f, 0x5f, 0x67, 0x72, 0x70, 0x63, 0x5f,
+	0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -248,12 +347,14 @@ func file_proto_file_proto_rawDescGZIP() []byte {
 	return file_proto_file_proto_rawDescData
 }
 
-var file_proto_file_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_proto_file_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_proto_file_proto_goTypes = []interface{}{
-	(*FileSaveRequest)(nil),  // 0: file.FileSaveRequest
-	(*FileSaveResponse)(nil), // 1: file.FileSaveResponse
-	(*FileGetRequest)(nil),   // 2: file.FileGetRequest
-	(*FileGetResponse)(nil),  // 3: file.FileGetResponse
+	(*FileSaveRequest)(nil),    // 0: file.FileSaveRequest
+	(*FileSaveResponse)(nil),   // 1: file.FileSaveResponse
+	(*FileGetRequest)(nil),     // 2: file.FileGetRequest
+	(*FileGetResponse)(nil),    // 3: file.FileGetResponse
+	(*FileDeleteRequest)(nil),  // 4: file.FileDeleteRequest
+	(*FileDeleteResponse)(nil), // 5: file.FileDeleteResponse
 }
 var file_proto_file_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -317,6 +418,30 @@ func file_proto_file_proto_init() {
 				return nil
 			}
 		}
+		file_proto_file_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FileDeleteRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_file_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FileDeleteResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -324,7 +449,7 @@ func file_proto_file_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_proto_file_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
