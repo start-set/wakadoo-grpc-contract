@@ -369,3 +369,125 @@ var Session_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "wakadoo.proto",
 }
+
+// TelegramClient is the client API for Telegram service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type TelegramClient interface {
+	SendRegistrationAccountForAdmin(ctx context.Context, in *SendRegistrationAccountRequest, opts ...grpc.CallOption) (*SendRegistrationAccountResponse, error)
+	SendErrorBuyTariff(ctx context.Context, in *SendErrorBuyTariffRequest, opts ...grpc.CallOption) (*SendErrorBuyTariffResponse, error)
+}
+
+type telegramClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewTelegramClient(cc grpc.ClientConnInterface) TelegramClient {
+	return &telegramClient{cc}
+}
+
+func (c *telegramClient) SendRegistrationAccountForAdmin(ctx context.Context, in *SendRegistrationAccountRequest, opts ...grpc.CallOption) (*SendRegistrationAccountResponse, error) {
+	out := new(SendRegistrationAccountResponse)
+	err := c.cc.Invoke(ctx, "/services.Telegram/SendRegistrationAccountForAdmin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) SendErrorBuyTariff(ctx context.Context, in *SendErrorBuyTariffRequest, opts ...grpc.CallOption) (*SendErrorBuyTariffResponse, error) {
+	out := new(SendErrorBuyTariffResponse)
+	err := c.cc.Invoke(ctx, "/services.Telegram/SendErrorBuyTariff", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// TelegramServer is the server API for Telegram service.
+// All implementations must embed UnimplementedTelegramServer
+// for forward compatibility
+type TelegramServer interface {
+	SendRegistrationAccountForAdmin(context.Context, *SendRegistrationAccountRequest) (*SendRegistrationAccountResponse, error)
+	SendErrorBuyTariff(context.Context, *SendErrorBuyTariffRequest) (*SendErrorBuyTariffResponse, error)
+	mustEmbedUnimplementedTelegramServer()
+}
+
+// UnimplementedTelegramServer must be embedded to have forward compatible implementations.
+type UnimplementedTelegramServer struct {
+}
+
+func (UnimplementedTelegramServer) SendRegistrationAccountForAdmin(context.Context, *SendRegistrationAccountRequest) (*SendRegistrationAccountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendRegistrationAccountForAdmin not implemented")
+}
+func (UnimplementedTelegramServer) SendErrorBuyTariff(context.Context, *SendErrorBuyTariffRequest) (*SendErrorBuyTariffResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendErrorBuyTariff not implemented")
+}
+func (UnimplementedTelegramServer) mustEmbedUnimplementedTelegramServer() {}
+
+// UnsafeTelegramServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TelegramServer will
+// result in compilation errors.
+type UnsafeTelegramServer interface {
+	mustEmbedUnimplementedTelegramServer()
+}
+
+func RegisterTelegramServer(s grpc.ServiceRegistrar, srv TelegramServer) {
+	s.RegisterService(&Telegram_ServiceDesc, srv)
+}
+
+func _Telegram_SendRegistrationAccountForAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendRegistrationAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).SendRegistrationAccountForAdmin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Telegram/SendRegistrationAccountForAdmin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).SendRegistrationAccountForAdmin(ctx, req.(*SendRegistrationAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_SendErrorBuyTariff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendErrorBuyTariffRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).SendErrorBuyTariff(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Telegram/SendErrorBuyTariff",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).SendErrorBuyTariff(ctx, req.(*SendErrorBuyTariffRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Telegram_ServiceDesc is the grpc.ServiceDesc for Telegram service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Telegram_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "services.Telegram",
+	HandlerType: (*TelegramServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SendRegistrationAccountForAdmin",
+			Handler:    _Telegram_SendRegistrationAccountForAdmin_Handler,
+		},
+		{
+			MethodName: "SendErrorBuyTariff",
+			Handler:    _Telegram_SendErrorBuyTariff_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "wakadoo.proto",
+}
