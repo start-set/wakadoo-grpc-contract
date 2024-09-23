@@ -1,0 +1,24 @@
+syntax = "proto3";
+package telegram;
+
+option go_package=".;wakadoo_grpc_contract";
+
+message SendRegistrationAccountRequest {
+  string name = 1;
+  string phone = 2;
+  string email = 3;
+  string password = 4;
+}
+
+message SendRegistrationAccountResponse {
+}
+
+message SendErrorBuyTariffRequest {
+  string name = 1;
+  string phone = 2;
+  string email = 3;
+  string password = 4;
+}
+
+message SendErrorBuyTariffResponse{
+}

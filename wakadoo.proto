@@ -5,6 +5,7 @@ option go_package=".;wakadoo_grpc_contract";
 
 import "proto/file.proto";
 import "proto/session.proto";
+import "proto/telegram.proto";
 
 service File {
   rpc Save(file.FileSaveRequest) returns (file.FileSaveResponse) {}
@@ -17,4 +18,9 @@ service Session {
   rpc GetEmail(session.SessionGetEmailRequest) returns (session.SessionGetEmailResponse) {}
   rpc UpdateLastActivityTime(session.SessionUpdateActivityRequest) returns (session.SessionUpdateActivityResponse) {}
   rpc GetActive(session.SessionGetActiveRequest) returns (session.SessionGetActiveResponse) {}
+}
+
+service Telegram {
+  rpc SendRegistrationAccountForAdmin(telegram.SendRegistrationAccountRequest) returns (telegram.SendRegistrationAccountResponse) {}
+  rpc SendErrorBuyTariff(telegram.SendErrorBuyTariffRequest) returns (telegram.SendErrorBuyTariffResponse) {}
 }
