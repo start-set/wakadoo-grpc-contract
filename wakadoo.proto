@@ -23,4 +23,5 @@ service Session {
 service Telegram {
   rpc SendRegistrationAccountForAdmin(telegram.SendRegistrationAccountRequest) returns (telegram.SendRegistrationAccountResponse) {}
   rpc SendErrorBuyTariff(telegram.SendErrorBuyTariffRequest) returns (telegram.SendErrorBuyTariffResponse) {}
+  rpc SendSuccessBuyTariff(telegram.SendSuccessBuyTariffRequest) returns (telegram.SendSuccessBuyTariffResponse) {}
 }
