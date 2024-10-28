@@ -376,6 +376,7 @@ var Session_ServiceDesc = grpc.ServiceDesc{
 type TelegramClient interface {
 	SendRegistrationAccountForAdmin(ctx context.Context, in *SendRegistrationAccountRequest, opts ...grpc.CallOption) (*SendRegistrationAccountResponse, error)
 	SendErrorBuyTariff(ctx context.Context, in *SendErrorBuyTariffRequest, opts ...grpc.CallOption) (*SendErrorBuyTariffResponse, error)
+	SendSuccessBuyTariff(ctx context.Context, in *SendSuccessBuyTariffRequest, opts ...grpc.CallOption) (*SendSuccessBuyTariffResponse, error)
 }
 
 type telegramClient struct {
@@ -404,12 +405,22 @@ func (c *telegramClient) SendErrorBuyTariff(ctx context.Context, in *SendErrorBu
 	return out, nil
 }
 
+func (c *telegramClient) SendSuccessBuyTariff(ctx context.Context, in *SendSuccessBuyTariffRequest, opts ...grpc.CallOption) (*SendSuccessBuyTariffResponse, error) {
+	out := new(SendSuccessBuyTariffResponse)
+	err := c.cc.Invoke(ctx, "/services.Telegram/SendSuccessBuyTariff", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TelegramServer is the server API for Telegram service.
 // All implementations must embed UnimplementedTelegramServer
 // for forward compatibility
 type TelegramServer interface {
 	SendRegistrationAccountForAdmin(context.Context, *SendRegistrationAccountRequest) (*SendRegistrationAccountResponse, error)
 	SendErrorBuyTariff(context.Context, *SendErrorBuyTariffRequest) (*SendErrorBuyTariffResponse, error)
+	SendSuccessBuyTariff(context.Context, *SendSuccessBuyTariffRequest) (*SendSuccessBuyTariffResponse, error)
 	mustEmbedUnimplementedTelegramServer()
 }
 
@@ -422,6 +433,9 @@ func (UnimplementedTelegramServer) SendRegistrationAccountForAdmin(context.Conte
 }
 func (UnimplementedTelegramServer) SendErrorBuyTariff(context.Context, *SendErrorBuyTariffRequest) (*SendErrorBuyTariffResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendErrorBuyTariff not implemented")
+}
+func (UnimplementedTelegramServer) SendSuccessBuyTariff(context.Context, *SendSuccessBuyTariffRequest) (*SendSuccessBuyTariffResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendSuccessBuyTariff not implemented")
 }
 func (UnimplementedTelegramServer) mustEmbedUnimplementedTelegramServer() {}
 
@@ -472,6 +486,24 @@ func _Telegram_SendErrorBuyTariff_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Telegram_SendSuccessBuyTariff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendSuccessBuyTariffRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).SendSuccessBuyTariff(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Telegram/SendSuccessBuyTariff",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).SendSuccessBuyTariff(ctx, req.(*SendSuccessBuyTariffRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Telegram_ServiceDesc is the grpc.ServiceDesc for Telegram service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -486,6 +518,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendErrorBuyTariff",
 			Handler:    _Telegram_SendErrorBuyTariff_Handler,
+		},
+		{
+			MethodName: "SendSuccessBuyTariff",
+			Handler:    _Telegram_SendSuccessBuyTariff_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
