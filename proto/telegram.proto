@@ -14,16 +14,17 @@ message SendRegistrationAccountResponse {
 }
 
 message SendErrorBuyTariffRequest {
-  string phone = 2;
-  string email = 3;
+  string phone = 1;
+  string email = 2;
 }
 
 message SendErrorBuyTariffResponse{
 }
 
 message SendSuccessBuyTariffRequest {
-  string phone = 2;
-  string email = 3;
+  string phone = 1;
+  string email = 2;
+  string productNames = 3;
 }
 
 message SendSuccessBuyTariffResponse {
